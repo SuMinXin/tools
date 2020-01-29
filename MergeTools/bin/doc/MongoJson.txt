@@ -1,0 +1,122 @@
+[
+  {
+    "Name": "Sabre Soap",
+    "JsonString": "db.getCollection('Log_Sabre_Soap@YearMonth').aggregate([\n{\n    $match:{\n        \"ExecutionTime\":{ $gt : 0 },\n        \"CreateDateTime\":{ $gt:ISODate(\"@FullDateTimeStart\")}   \n        }\n},\n{\n    \"$group\":{\n        _id: '$Action',\n        \"Count\":{ $sum : 1 },\n        \"Avg\":{ \"$avg\":\"$ExecutionTime\" },\n        \"Max\":{ \"$max\":\"$ExecutionTime\" }    \n        }\n     } //計算筆數.平均.最大值\n])",
+    "Orderby": 9
+  },
+  {
+    "Name": "BFM RQ",
+    "JsonString": "db.getCollection('Log_BFM_SabreWs_RQ@YearMonth').find({\n    \"timestamp\":{$gt:ISODate(\"@TenMinutesAgo\"),$lt:ISODate(\"@FullDateTime\")}\n    ,\"method\":\"BargainFinderMaxRQ\"\n    ,\"searchId\":11865849\n    ,\"soap:Envelope.soap:Body.OTA_AirLowFareSearchRQ.OriginDestinationInformation.DepartureDateTime\":\"@YearOnly-05-23T11:00:00\"\n    ,\"soap:Envelope.soap:Body.OTA_AirLowFareSearchRQ.OriginDestinationInformation.OriginLocation.@LocationCode\":\"TPE\"\n    ,\"soap:Envelope.soap:Body.OTA_AirLowFareSearchRQ.OriginDestinationInformation.DestinationLocation.@LocationCode\":\"HKG\"\n    })\n    .sort({\"timestamp\":-1})//.count() \n\n\n\n---RevalidateItin\ndb.getCollection('Log_BFM_SabreWs_RQ201907').find({\n    \"timestamp\":{$gt:ISODate(\"2019-07-01 11:37:00.474+08:00\")\n        ,$lt:ISODate(\"2019-07-01 11:38:00.474+08:00\")}\n       ,\"soap:Envelope.soap:Header.MessageHeader.Service\":/RevalidateItinRQ/\n    })\n    .sort({\"timestamp\":-1}).limit(10)",
+    "Orderby": 1
+  },
+  {
+    "Name": "BFM RS",
+    "JsonString": "db.getCollection('Log_BFM_SabreWs_RS@YearMonth').find({\n    \"timestamp\":{$gt:ISODate(\"@TenMinutesAgo\"),$lt:ISODate(\"@FullDateTime\")}\n    ,\"method\":\"BargainFinderMaxRQ\"\n    ,\"original\":/H4sIA/\n    })",
+    "Orderby": 2
+  },
+  {
+    "Name": "EAB RQ",
+    "JsonString": "db.getCollection('Log_BFM_SabreWs_RQ@YearMonth').find({\n      \"timestamp\":{\n         $gt:ISODate(\"@TenMinutesAgo\")\n        ,$lt:ISODate(\"@FullDateTime\")}\n    ,\"method\":/EnhancedAirBookRQ/\n    ,'soap:Envelope.soap:Body.EnhancedAirBookRQ.PreProcessing.UniqueID.@ID':/MDALTB/ \n    })",
+    "Orderby": 3
+  },
+  {
+    "Name": "PD1 RQ",
+    "JsonString": "db.getCollection('Log_BFM_SabreWs_RQ@YearMonth').find({\n     \"timestamp\":{\n         $gt:ISODate(\"@TenMinutesAgo\")\n        ,$lt:ISODate(\"@FullDateTime\")}\n    ,\"method\":\"PassengerDetailsRQ\"\n    ,'soap:Envelope.soap:Body.PassengerDetailsRQ.TravelItineraryAddInfoRQ.CustomerInfo.PersonName.GivenName':/SHANGSIAN/ \n    })",
+    "Orderby": 4
+  },
+  {
+    "Name": "PD2 RQ",
+    "JsonString": "db.getCollection('Log_BFM_SabreWs_RQ@YearMonth').find({\n     \"timestamp\":{$gt:ISODate(\"@TenMinutesAgo\"),$lt:ISODate(\"@FullDateTime\")}\n    ,\"method\":\"PassengerDetailsRQ\"\n    ,'soap:Envelope.soap:Body.PassengerDetailsRQ.PreProcessing.UniqueID.@ID':/MDALTB/ \n    })",
+    "Orderby": 5
+  },
+  {
+    "Name": "Serp Order",
+    "JsonString": "db.getCollection('Log_Order_Booking@YearMonth').find({\n    \"wtYear\":\"@YearOnly\",\n    \"wtordr\":\"1110100\" \n    /*,\"timestamp\":{\n        $gt:\"@AnHourAgo\",\n        $lt:\"@FullDateTime_T\"   \n   }*/\n})\n    -----失敗紀錄-----\n    db.getCollection('Log_Order_Booking@YearMonth').find({\n    \"timestamp\":{ $gt:\"@AnHourAgo_T\"}\n    ,\"errorMessage\":{$ne:\"Success!\"}\n})//.count()",
+    "Orderby": 10
+  },
+  {
+    "Name": "Line Order",
+    "JsonString": "db.getCollection('Log_Line_Order@YearMonth').find({\n    \"Request\":/@YearOnly-399498/\n    ,\"timestamp\":{$gt:ISODate(\"@AnHourAgo\")}\n    }).sort({\"timestamp\":-1})",
+    "Orderby": 11
+  },
+  {
+    "Name": "TF Order",
+    "JsonString": "db.getCollection('Log_Travelfusion_IssueTkt@YearMonth').find({\n    \"wtYear\":\"@YearOnly\",\"wtordr\":\"374001\"}).sort({\"timestamp\":-1})//.count()",
+    "Orderby": 12
+  },
+  {
+    "Name": "Step1 Error",
+    "JsonString": "db.getCollection('Log_CRM_OrderCheck@YearMonth').find({\n    \"Order\":\"\",\n    \"Exception\":/檢核/ }).sort({\"Date\":-1}).limit(50)",
+    "Orderby": 12
+  },
+  {
+    "Name": "ENS Log",
+    "JsonString": "db.getCollection('Log_Sabre_Content').find({\n    \"date\" : { \n        $gt:ISODate(\"@AnHourAgo\")\n        ,$lt:ISODate(\"@FullDateTime\")\n        }\n    ,\"content.Body.PNRCHNG.OWNPCC\": {$gt : \"\"}\n    ,\"remark\": \"\"})",
+    "Orderby": 20
+  },
+  {
+    "Name": "GDS 訂位",
+    "JsonString": "db.getCollection('Log_Order_Booking@YearMonth').find({\n        \"Web\":\"GdsBooking_CreatePNR\",\n        //\"Order\":\"@YearOnly-510400\"\n    }).sort({\"Date\":-1})",
+    "Orderby": 21
+  },
+  {
+    "Name": "GDS Error",
+    "JsonString": "db.getCollection('LionExAPI.GDS_ErrorLog@YearMonth').find({\n    \"ActionData\":\"Sabre/BookingController\",\n    //\"Order\":\"@YearOnly-510400\"\n    }).sort({\"CreateDateTime\":-1})\n    .limit(10)",
+    "Orderby": 21
+  },
+  {
+    "Name": "ExAPI.TKT",
+    "JsonString": "db.getCollection('O_TKT_Lion.ExAPI.TKT_Log_Connection@YearMonth').find({\n   \"CreateDateTime\":{\n         $gte:new ISODate(\"@AnHourAgo\"),\n         $lte:new ISODate(\"@FullDateTime\")},\n    \"ActionData\" : /Transfer/ \n})\n.sort({\n    \"CreateDateTime\" : -1\n}).limit(10)",
+    "Orderby": 80
+  },
+  {
+    "Name": "TKT→GDS",
+    "JsonString": "db.getCollection('O_TKT_Lion.ExAPI.TKT_Log_Tracing@YearMonth').find({\n    \"CreateDateTime\": {\n        $gt:ISODate(\"@AnHourAgo\")\n       ,$lt:ISODate(\"@FullDateTime\")}\n    ,\"ApiName\":\"[ExGDS]/api/V2/Sabre/BargainFinderMax\"\n    //,\"Param\":/SFO/\n    })",
+    "Orderby": 82
+  },
+  {
+    "Name": "TKT→TK",
+    "JsonString": "db.getCollection('O_TKT_Lion.ExAPI.TKT_Log_Tracing@YearMonth').find({\n    \"CreateDateTime\": {\n        $gt:ISODate(\"@AnHourAgo\")\n       ,$lt:ISODate(\"@FullDateTime\")}\n     ,\"ActionData\" : \"/V2/WebOrder/Transfer\"\n    })\n    \n    ------------------\n\n db.getCollection('O_TKT_Lion.ExAPI.TKT_Log_Tracing@YearMonth').find({ \n  \"RequestId\" : \"ec3acc74-7201-4a8b-925e-f20740fa86fd\"})\n  .sort({ \"CreateDateTime\" : -1 })\n  .limit(10)",
+    "Orderby": 81
+  },
+  {
+    "Name": "3in1Booking",
+    "JsonString": "db.getCollection('Log_Order_Booking')\n    .find({\"Web\":\"3in1Booking\"})\n    .sort({\"Date\":-1}).limit(10)",
+    "Orderby": 82
+  },
+  {
+    "Name": "TF Booking",
+    "JsonString": "db.getCollection('Log_TravelFusion_RQRS201905').find({\n    \"CreateDateTime\": {\n        $gt:ISODate(\"2019-05-23 19:45:47.116+08:00\")\n       ,$lt:ISODate(\"2019-05-23 19:50:47.116+08:00\")}\n       ,\"ActionData\":\"/api/V2/Travelfusion/ProcessTerms\"\n       })",
+    "Orderby": 83
+  },
+  {
+    "Name": "ExAPI.TKT(25)",
+    "JsonString": "db.getCollection('O_TKT_Lion.ExAPI.TKT_Log_Tracing@YearMonth')\n.find({\n    \"CreateDateTime\":{\n        $gte:new ISODate(\"@AnHourAgo\"),\n        $lte:new ISODate(\"@FullDateTime\")\n       },\n      $or:[{\n          \"ActionData\" : \"/V2/WebOrder/Transfer\",\n          \"ActionData\" : \"/V2/AutoIssueTicket\",}],\n      \"StackTrace\" : \"[0025]\",\n    })\n .sort({\"CreateDateTime\":-1})//.count()",
+    "Orderby": 84
+  },
+  {
+    "Name": "清留言",
+    "JsonString": "$('[name=\"CheckSts\"]').each(function(inx,e){ $(this).click();})",
+    "Orderby": 90
+  },
+  {
+    "Name": "路徑",
+    "JsonString": "---Maven---\nC:\\Users\\minxinsu\\.m2\\repository\n---AP---\n\\\\Iis-utour\\utour\\WebApp\\TKTAP\n\\\\Iis-utour\\utour\\WebApp\\TKTCAP\n\\\\iis-tour\\TOUR\\WebApp\\TKTAP\n\\\\iis-tour\\TOUR\\WebApp\\TKTCAP\n---LOG---\n\\\\Iis-utour\\utour\\APData\\TKTAP\n\\\\Iis-utour\\utour\\APData\\TKTCAP\n\\\\data-tour\\APData\\TKTAP\n\\\\data-tour\\APData\\TKTCAP\n\n\n---API---\n\\\\iis-ucoreapi\\ucoreapi\\Lion.CoreAPI.TK\n\\\\iis-uapi\\API\\Lion.ExAPI.TK\n\\\\iis-uapi\\API\\Lion.ExAPI.TKT\n\\\\iis-uapi\\API\\Lion.ExAPI.GDS\n\\\\other-share3\\資訊部公用\\軟體部\\主機元件\\API\n\n\\\\Iis-api1~7\\api\\Lion.ExAPI.GDS\n\\\\Iis-api1~7\\api\\Lion.ExAPI.TK\n\\\\IIS-COREAPI1~4、6\\coreapi1\\Lion.CoreAPI.TK\n\\\\iis-inapi\\INAPI\\WebApp\\TKTAPI\n\n\n--B2C---\n\n\\\\Iis-b2c3\\b2c\n\\\\Iis-b2c4\\b2c\n\\\\Iis-b2c5\\b2c\n\\\\Iis-b2c6\\b2c",
+    "Orderby": 91
+  },
+  {
+    "Name": "GetCommandText",
+    "JsonString": "GetCommandText(ProviderName, commandText, dbParameters)",
+    "Orderby": 92
+  },
+  {
+    "Name": "簽名檔",
+    "JsonString": "Best Regards, \n\n雄獅集團  BPM發展部/機票系統\n蘇敏昕 Minxin Su #8341\nE-mail：minxinsu@liontravel.com\n   公司地址：114台北市內湖區石潭路151號",
+    "Orderby": 99
+  },
+  {
+    "Name": "其它",
+    "JsonString": "-------快捷鍵-------\nalt+space+X\nalt+shift\n    \n-------刷卡測試-------\n刷卡單號:8888 8800 0000 0001\n後三碼793\n期限12/23\n    ",
+    "Orderby": 98
+  }
+]
