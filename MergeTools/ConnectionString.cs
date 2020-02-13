@@ -8,11 +8,6 @@ namespace MergeTools
 {
     public partial class ConnectForm : Form
     {
-        private string _key = "14198561";
-        private string _iv = "79495349";
-        private static string _cryptoKeya = "1dce0c8cb9c54cbdaf21976405dc8903";
-        public static String ALGORITHM_D = "DES";
-        public static String ALGORITHM_A = "AES";
         public ConnectForm()
         {
             InitializeComponent();

@@ -9,8 +9,8 @@ namespace MergeTools.Encrypt
 
     public class DESEncryptSERP : EncryptMethod
     {
-        private string _key = "7x52cr6P";
-        private string _iv = "4kQJaTyT";
+        private string _key = "6x33cr6P";
+        private string _iv = "6kRJbTyA";
 
         override
         public string Encrypt(string value) {

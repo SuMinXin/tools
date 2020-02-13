@@ -8,7 +8,7 @@ namespace MergeTools.Encrypt
 
     public class AESEncrypt : EncryptMethod
     {
-        private static string _cryptoKeya = "1dce0c8cb9c54cbdaf21976405dc8903";
+        private static string _cryptoKeya = "1dce0c8cb9c66cbdaf53120589dc8903";
         private static AesManaged getAesCipher()
         {
             AesManaged aesCipher = new AesManaged();

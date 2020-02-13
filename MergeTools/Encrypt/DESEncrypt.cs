@@ -9,8 +9,8 @@ namespace MergeTools.Encrypt
 
     public class DESEncrypt : EncryptMethod
     {
-        private string _key = "14198561";
-        private string _iv = "79495349";
+        private string _key = "16543527";
+        private string _iv = "85436579";
 
         override
         public string Encrypt(string value) {

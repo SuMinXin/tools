@@ -122,10 +122,10 @@
             this.rBtn_TKT.ForeColor = System.Drawing.SystemColors.InactiveBorder;
             this.rBtn_TKT.Location = new System.Drawing.Point(25, 5);
             this.rBtn_TKT.Name = "rBtn_TKT";
-            this.rBtn_TKT.Size = new System.Drawing.Size(62, 28);
+            this.rBtn_TKT.Size = new System.Drawing.Size(65, 28);
             this.rBtn_TKT.TabIndex = 9;
             this.rBtn_TKT.TabStop = true;
-            this.rBtn_TKT.Text = "TKT";
+            this.rBtn_TKT.Text = "DES";
             this.rBtn_TKT.UseVisualStyleBackColor = true;
             this.rBtn_TKT.CheckedChanged += new System.EventHandler(this.rBtn_TKT_CheckedChanged);
             // 
@@ -136,10 +136,10 @@
             this.rBtn_newGDS.ForeColor = System.Drawing.SystemColors.InactiveBorder;
             this.rBtn_newGDS.Location = new System.Drawing.Point(100, 5);
             this.rBtn_newGDS.Name = "rBtn_newGDS";
-            this.rBtn_newGDS.Size = new System.Drawing.Size(106, 28);
+            this.rBtn_newGDS.Size = new System.Drawing.Size(64, 28);
             this.rBtn_newGDS.TabIndex = 10;
             this.rBtn_newGDS.TabStop = true;
-            this.rBtn_newGDS.Text = "newGDS";
+            this.rBtn_newGDS.Text = "AES";
             this.rBtn_newGDS.UseVisualStyleBackColor = true;
             this.rBtn_newGDS.CheckedChanged += new System.EventHandler(this.rBtn_newGDS_CheckedChanged);
             // 
@@ -172,12 +172,12 @@
             this.rBtn_SERP.AutoSize = true;
             this.rBtn_SERP.Font = new System.Drawing.Font("微軟正黑體", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(136)));
             this.rBtn_SERP.ForeColor = System.Drawing.SystemColors.InactiveBorder;
-            this.rBtn_SERP.Location = new System.Drawing.Point(225, 5);
+            this.rBtn_SERP.Location = new System.Drawing.Point(170, 5);
             this.rBtn_SERP.Name = "rBtn_SERP";
-            this.rBtn_SERP.Size = new System.Drawing.Size(75, 28);
+            this.rBtn_SERP.Size = new System.Drawing.Size(85, 28);
             this.rBtn_SERP.TabIndex = 11;
             this.rBtn_SERP.TabStop = true;
-            this.rBtn_SERP.Text = "SERP";
+            this.rBtn_SERP.Text = "DES_2";
             this.rBtn_SERP.UseVisualStyleBackColor = true;
             // 
             // ConnectForm
